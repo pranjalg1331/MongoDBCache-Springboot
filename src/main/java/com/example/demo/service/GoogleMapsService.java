@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.data.domain.DistanceEntity;
 import com.example.demo.data.repository.DistanceRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.apache.tomcat.util.json.JSONParser;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class GoogleMapsService {
     @Autowired
     private DistanceRepository distanceRepository;
 
+    @Value("${api.key}")
+    private String apiKey;
 //    public GoogleMapsService(RestTemplate restTemplate) {
 //        this.restTemplate = restTemplate;
 //    }
@@ -32,7 +35,7 @@ public class GoogleMapsService {
         }
         String url = String.format(
                 "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%s&destinations=%s&key=%s",
-                origin, destination, "AIzaSyCWcvgvKYyNdJa3MQp9DBr0gGHAeIMCxcw"
+                origin, destination, apiKey
         );
         try{
             String hello= restTemplate.getForObject(url, String.class);
